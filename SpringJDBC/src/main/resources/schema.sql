@@ -1,0 +1,5 @@
+--create table student(
+--    rollno INTEGER PRIMARY KEY,
+--    name VARCHAR(50),
+--    marks INTEGER
+--);

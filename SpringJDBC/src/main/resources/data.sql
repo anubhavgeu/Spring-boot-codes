@@ -1,0 +1,4 @@
+--insert into student (rollno,name,marks) VALUES (1,'Anubhav',85)
+--insert into student (rollno,name,marks) VALUES (2,'Nivedita',100)
+--insert into student (rollno,name,marks) VALUES (3,'Abhishek',90)
+--insert into student (rollno,name,marks) VALUES (4,'Rohit',91)
