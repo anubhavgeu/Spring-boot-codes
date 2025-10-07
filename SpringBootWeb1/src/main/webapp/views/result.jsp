@@ -7,6 +7,7 @@
         <h2>
             Result is: ${alien}
         </h2>
+        <p>Welcome to the ${course} world</p>
 
     </body>
 </html>

@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 
+    @ModelAttribute("course")
+    public String courseName() {
+        return "Java";
+    }
+
 //    @RequestMapping("/home")
 //    public String home() {
 //        System.out.println("Controller called...");
@@ -49,8 +54,7 @@ public class HomeController {
 //    }
 
     @RequestMapping("addAlien")
-    public String addAlien(@ModelAttribute Alien alien) {
-
+    public String addAlien(Alien alien) {
         return "result";
     }
 }
