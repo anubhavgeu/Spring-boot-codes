@@ -65,15 +65,17 @@ public class SecurityConfig {
 //        httpSecurity.authorizeHttpRequests(customizerHttp);
         return httpSecurity.build();
     }
-
+    // in memory auth;
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails userDetails = User
-                                    .withDefaultPasswordEncoder()
-                                    .username("Anubhav")
-                                    .password("1234")
-                                    .roles("Admin", "User")
-                                    .build();
-        return new InMemoryUserDetailsManager(userDetails);
+        UserDetails user1 = User.withUsername("user1")
+                .password("Anubhav")
+                .roles("USER")
+                .build();
+        UserDetails admin = User.withUsername("admin")
+                .password("AnubhavPass")
+                .roles("ADMIN")
+                .build();
+        return new InMemoryUserDetailsManager(user1,admin);
     }
 }
