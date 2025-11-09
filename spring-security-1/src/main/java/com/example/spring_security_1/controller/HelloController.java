@@ -1,19 +1,17 @@
 package com.example.spring_security_1.controller;
 
-
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HelloController {
-
-    @GetMapping("hello")
-    public String greet(HttpServletRequest request) {
-        return "hello world " + request.getSession().getId();
+    @GetMapping("/hello")
+    public String hello(HttpServletRequest request) {
+        return "Hello " + request.getSession().getId();
     }
 
-    @GetMapping("about")
+    @GetMapping("/about")
     public String about(HttpServletRequest request) {
         return "TCS " + request.getSession().getId();
     }

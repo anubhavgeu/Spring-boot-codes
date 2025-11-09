@@ -1,23 +1,30 @@
 package com.example.spring_security_1.model;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "users")
+@Table(name = "Users")
 public class User {
     @Id
-    private int id;
+    private Integer id;
     private String username;
-    private String password;
+    private String passwords;
 
-    public int getId() {
+    User(){}
+
+    public User(Integer id, String username, String passwords) {
+        this.id = id;
+        this.username = username;
+        this.passwords = passwords;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -29,12 +36,12 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswords() {
+        return passwords;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswords(String passwords) {
+        this.passwords = passwords;
     }
 
     @Override
@@ -42,7 +49,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                ", passwords='" + passwords + '\'' +
                 '}';
     }
 }

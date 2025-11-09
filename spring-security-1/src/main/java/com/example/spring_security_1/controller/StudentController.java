@@ -15,16 +15,11 @@ import java.util.List;
 @RestController
 public class StudentController {
     List<Student> students = new ArrayList<>(List.of(
-            new Student(1,"Navin","Java"),
-            new Student(2,"Anubhav", "Python")
+            new Student(1,"Anubhav","Java"),
+            new Student(2,"Nivedita", "Python")
     ));
 
-    @GetMapping("csrf-token")
-    public CsrfToken getCsrfToken(HttpServletRequest request) {
-        return (CsrfToken) request.getAttribute("_csrf");
-    }
-
-    @GetMapping("students")
+    @GetMapping("/students")
     public List<Student> getStudents() {
         return students;
     }
@@ -32,5 +27,10 @@ public class StudentController {
     @PostMapping("students")
     public void addStudent(@RequestBody Student student) {
         students.add(student);
+    }
+
+    @GetMapping("/csrf-token")
+    public CsrfToken getCsrfToken(HttpServletRequest request) {
+        return (CsrfToken) request.getAttribute("_csrf");
     }
 }

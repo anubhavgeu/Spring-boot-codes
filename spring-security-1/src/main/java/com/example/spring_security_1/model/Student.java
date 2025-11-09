@@ -1,21 +1,23 @@
 package com.example.spring_security_1.model;
 
 public class Student {
-    private int id;
+    private Integer id;
     private String name;
-    private String technology;
+    private String tech;
 
-    public Student(int i, String navin, String java) {
-        this.id =  i;
-        this.name = navin;
-        this.technology = java;
+    Student() {}
+
+    public Student(Integer id, String name, String tech) {
+        this.id = id;
+        this.name = name;
+        this.tech = tech;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -27,22 +29,20 @@ public class Student {
         this.name = name;
     }
 
-    public String getTechnology() {
-        return technology;
+    public String getTech() {
+        return tech;
     }
 
-    public void setTechnology(String technology) {
-        this.technology = technology;
+    public void setTech(String tech) {
+        this.tech = tech;
     }
-
 
     @Override
     public String toString() {
         return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", technology='" + technology + '\'' +
+                ", tech='" + tech + '\'' +
                 '}';
     }
-
 }
