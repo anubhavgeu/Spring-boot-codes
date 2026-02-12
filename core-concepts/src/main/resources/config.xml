@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd
+">
+    <context:component-scan base-package="com.core.concepts"/>
+    <!-- bean definitions here -->
+<!--    <bean id="engine1" class="com.core.concepts.Engine">-->
+
+<!--    </bean>-->
+<!--    <bean id="car" class="com.core.concepts.Car">-->
+
+<!--        information for injection-->
+<!--        <property name="engine" ref="engine1"/>-->
+
+<!--    </bean>-->
+<!--    <bean id="userService1" class="com.core.concepts.assignment1.UserService">-->
+
+<!--    </bean>-->
+<!--    <bean id="userController" class="com.core.concepts.assignment1.UserController">-->
+<!--        <property name="userService" ref="userService1"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="email" class="com.core.concepts.assignment1.Notification.EmailNotification"/>-->
+<!--    <bean id="sms" class="com.core.concepts.assignment1.Notification.SMSNotification"/>-->
+
+<!--    <bean id="notificationManager" class="com.core.concepts.assignment1.Notification.NotificationManager">-->
+<!--        <property name="notificationService">-->
+<!--            <map>-->
+<!--                <entry key="email" value-ref="email"/>-->
+<!--                <entry key="sms" value-ref="sms"/>-->
+<!--            </map>-->
+<!--        </property>-->
+<!--    </bean>-->
+</beans>
