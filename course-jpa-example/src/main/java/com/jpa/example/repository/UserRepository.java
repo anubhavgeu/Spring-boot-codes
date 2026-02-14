@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User,Integer> {
-    Optional<User> findByEmail(String value);
-    Optional<List<User>> findByName(String name);
-
-    @Query(value = "SELECT * FROM jpa_user", nativeQuery = true)
-    public List<User> getUser();
-
-    @Query(value = "SELECT * FROM jpa_user WHERE email = :email", nativeQuery = true)
-    public List<User> getUsersByEmail(@Param("email") String email);
+//    Optional<User> findByEmail(String value);
+//    Optional<List<User>> findByName(String name);
+//
+//    @Query(value = "SELECT * FROM jpa_user", nativeQuery = true)
+//    public List<User> getUser();
+//
+//    @Query(value = "SELECT * FROM jpa_user WHERE email = :email", nativeQuery = true)
+//    public List<User> getUsersByEmail(@Param("email") String email);
 }

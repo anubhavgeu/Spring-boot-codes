@@ -3,6 +3,9 @@ package com.jpa.example.entities;
 import com.jpa.example.dto.UserType;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "jpa_user")
 public class User {
@@ -21,7 +24,11 @@ public class User {
     @Embedded
     private Address address;
 
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST)
+//    private Laptop laptop;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Laptop>  laptops = new ArrayList<>();
     public User() {}
     public User(int userId, String name, String email, int age, boolean isActive, UserType userType) {
         this.userId = userId;
@@ -30,6 +37,24 @@ public class User {
         this.age = age;
         this.isActive = isActive;
         this.type = userType;
+    }
+
+
+//    public Laptop getLaptop() {
+//        return laptop;
+//    }
+//
+//    public void setLaptop(Laptop laptop) {
+//        this.laptop = laptop;
+//    }
+
+
+    public List<Laptop> getLaptops() {
+        return laptops;
+    }
+
+    public void setLaptops(List<Laptop> laptops) {
+        this.laptops = laptops;
     }
 
     public UserType getType() {
