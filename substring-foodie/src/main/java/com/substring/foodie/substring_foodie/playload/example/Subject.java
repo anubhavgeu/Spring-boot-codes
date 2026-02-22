@@ -1,4 +1,4 @@
-package com.substring.foodie.substring_foodie.dto;
+package com.substring.foodie.substring_foodie.playload.example;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

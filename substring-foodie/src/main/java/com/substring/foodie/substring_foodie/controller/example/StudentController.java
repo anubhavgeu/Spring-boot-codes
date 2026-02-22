@@ -1,8 +1,8 @@
-package com.substring.foodie.substring_foodie.controller;
+package com.substring.foodie.substring_foodie.controller.example;
 
-import com.substring.foodie.substring_foodie.dto.Department;
-import com.substring.foodie.substring_foodie.dto.Student;
-import com.substring.foodie.substring_foodie.dto.Subject;
+import com.substring.foodie.substring_foodie.playload.example.Department;
+import com.substring.foodie.substring_foodie.playload.example.Student;
+import com.substring.foodie.substring_foodie.playload.example.Subject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
