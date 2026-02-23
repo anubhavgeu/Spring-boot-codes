@@ -23,6 +23,8 @@ public class UserController {
 
     @RequestMapping("/player-list")
     public List<String> getPlayerList() {
+        String template = null;
+        template.length();
         List<String> playerList = new ArrayList<>();
         playerList.add("Rohit");
         playerList.add("Robin");

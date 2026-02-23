@@ -4,6 +4,7 @@ import com.substring.foodie.substring_foodie.playload.example.UserData;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,4 +33,12 @@ public class AuthController {
         logger.info("age: {}", userData.getAge());
         return "Got the data";
     }
+
+    // exception handling method;
+//    @ExceptionHandler(NullPointerException.class)
+//    public String handleNullPointerException(NullPointerException nullPointerException) {
+//        logger.error(nullPointerException.getMessage());
+//        nullPointerException.printStackTrace();
+//        return nullPointerException.getMessage();
+//    }
 }

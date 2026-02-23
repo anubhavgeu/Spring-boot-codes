@@ -1,5 +1,6 @@
 package com.substring.foodie.substring_foodie.playload.example;
 
+import com.substring.foodie.substring_foodie.utils.ValidGender;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,8 @@ public class UserData {
     @Max(value = 99, message = "Invalid Age!!")
     @Min(value = 18, message = "Min value required is 18.")
     private int age;
+    @ValidGender
+    private String gender;
     @Email(message = "Invalid email!!")
     private String email;
     @NotEmpty(message = "Password is required")
