@@ -5,6 +5,10 @@ import com.substring.foodie.substring_foodie.dto.UserDto;
 import com.substring.foodie.substring_foodie.entity.Restaurant;
 import com.substring.foodie.substring_foodie.entity.User;
 import com.substring.foodie.substring_foodie.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -64,9 +68,24 @@ public class UserController {
     }
 
     // getALl User;
-    public ResponseEntity<List<UserDto>> findAll() {
-        List<UserDto> userDtoList = userService.getAll();
+    @GetMapping("/")
+    public ResponseEntity<Page<UserDto>> findAll(
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+            @RequestParam(value = "sortBy", required = false, defaultValue = "createdAt") String sortBy,
+            @RequestParam(value = "sortDir", required = false, defaultValue = "desc") String sortDir
+    ) {
+        Sort sort = sortDir.equalsIgnoreCase("asc") ?
+                Sort.by(sortBy).ascending() :
+                Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page,size,sort);
+        Page<UserDto> userDtoList = userService.getAll(pageable);
         return new ResponseEntity<>(userDtoList,HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> findById(@PathVariable("userId") String id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
 }

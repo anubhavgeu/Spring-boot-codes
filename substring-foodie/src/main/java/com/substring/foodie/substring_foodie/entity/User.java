@@ -27,7 +27,7 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role; // ADMIN, CUSTOMER, DELIVERY BOY
     private Boolean isAvailable = true; // applicable for delivery boy only
-//    private LocalDateTime createdAt;
+    private LocalDateTime createdAt;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Restaurant> restaurantList = new ArrayList<>();
 

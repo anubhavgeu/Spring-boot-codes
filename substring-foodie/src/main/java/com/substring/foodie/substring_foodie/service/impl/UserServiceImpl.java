@@ -11,6 +11,8 @@ import com.substring.foodie.substring_foodie.service.UserService;
 import com.substring.foodie.substring_foodie.utils.Helper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.util.BeanUtil;
 
@@ -44,11 +46,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAll() {
-        List<User> users = userRepository.findAll();
-        return users.stream()
-                .map(this::convertUserToUserDto)
-                .toList();
+    public Page<UserDto> getAll(Pageable pageable) {
+//        List<User> users = userRepository.findAll();
+//        return users.stream()
+//                .map(this::convertUserToUserDto)
+//                .toList();
+        Page<User> usersPage = userRepository.findAll(pageable);
+        return usersPage.map(user -> convertUserToUserDto(user));
     }
 
     @Override
