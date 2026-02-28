@@ -4,6 +4,7 @@ import com.substring.foodie.substring_foodie.dto.RestaurantDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public interface RestaurantService {
@@ -17,4 +18,6 @@ public interface RestaurantService {
     // add more services;
     // get restaurant which are open now;
     Page<RestaurantDto> getOpenRestaurant(Pageable pageable);
+
+    List<RestaurantDto> getOpenRestaurantAtGivenTime(LocalTime time);
 }

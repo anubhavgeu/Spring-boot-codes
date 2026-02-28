@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,5 +78,14 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Page<RestaurantDto> getOpenRestaurant(Pageable pageable) {
         Page<Restaurant> restaurantPage = restaurantRepository.findByIsOpen(true,pageable);
         return restaurantPage.map(restaurant -> modelMapper.map(restaurant, RestaurantDto.class));
+    }
+
+    @Override
+    public List<RestaurantDto> getOpenRestaurantAtGivenTime(LocalTime time) {
+        List<Restaurant> restaurants = restaurantRepository.findByIsOpenAndTimeBetweenOpenTimeAndCloseTime(true, time);
+        return restaurants
+                .stream()
+                .map(restaurant -> modelMapper.map(restaurant, RestaurantDto.class))
+                .collect(Collectors.toList());
     }
 }
