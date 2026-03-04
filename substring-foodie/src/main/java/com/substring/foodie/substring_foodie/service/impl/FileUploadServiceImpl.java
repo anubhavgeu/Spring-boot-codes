@@ -5,6 +5,7 @@ import com.substring.foodie.substring_foodie.exception.InvalidFilePathException;
 import com.substring.foodie.substring_foodie.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,11 +30,27 @@ public class FileUploadServiceImpl implements FileService {
         if (!Files.exists(folderPath)) {
             Files.createDirectories(folderPath);
         }
+        String fileName = path.substring(path.lastIndexOf("/")+1);
+        String extension = fileName.substring(fileName.lastIndexOf(".")+1);
+        if (extension.equalsIgnoreCase("jpeg") || extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("gif")) {
 
+        }
+        else {
+            throw new InvalidFilePathException("Invalid upload extension");
+        }
         Path filePath = Paths.get(path);
         Files.copy(file.getInputStream(),filePath, StandardCopyOption.REPLACE_EXISTING);
-        String fileName = path.substring(path.lastIndexOf("/")+1);
         FileData fileData = new FileData(fileName, path);
         return fileData;
+    }
+
+    @Override
+    public void deleteFile(String path) {
+        
+    }
+
+    @Override
+    public Resource loadFile(String path) {
+        return null;
     }
 }

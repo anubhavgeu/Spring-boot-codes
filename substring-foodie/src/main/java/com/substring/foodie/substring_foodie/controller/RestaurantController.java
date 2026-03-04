@@ -6,17 +6,26 @@ import com.substring.foodie.substring_foodie.service.FileService;
 import com.substring.foodie.substring_foodie.service.RestaurantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -24,6 +33,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/restaurants")
 public class RestaurantController {
+    @Value("${restaurant.file.path}")
+    private String bannerFolderPath;
     private Logger logger = LoggerFactory.getLogger(RestaurantController.class);
 
     private final RestaurantService restaurantService;
@@ -110,4 +121,17 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurantDto);
     }
 
+    @GetMapping("/{restaurantId}/banner")
+    public ResponseEntity<Resource> serveFile(@PathVariable String restaurantId) throws MalformedURLException, FileNotFoundException {
+        RestaurantDto restaurantDto = restaurantService.getById(restaurantId);
+        String fullPath = bannerFolderPath+restaurantDto.getBanner();
+        Path filePath = Paths.get(fullPath);
+        Resource resource = new UrlResource(filePath.toUri());
+        if (!resource.exists()) {
+            throw new FileNotFoundException("File not found: " + fullPath);
+        }
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG)
+                .body(resource);
+    }
 }
