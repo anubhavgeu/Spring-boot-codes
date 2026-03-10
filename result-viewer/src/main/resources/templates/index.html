@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result-Viewer | Instant Access to Your Scores</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb', // Blue-600
+                        primaryHover: '#1d4ed8', // Blue-700
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 antialiased">
+
+<nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16 items-center">
+
+            <div class="flex-shrink-0 flex items-center">
+                <a href="#" class="text-2xl font-bold text-primary">Result-Viewer</a>
+            </div>
+
+            <div class="hidden md:flex space-x-8 items-center">
+                <a th:href="@{'/'}" class="text-primary font-medium transition">Home</a>
+                <a th:href="@{'/view-result'}"  class="text-slate-600 hover:text-primary font-medium transition">View Result</a>
+                <a th:href="@{'/admin/add-result'}" class="text-slate-600 hover:text-primary font-medium transition">Add Result</a>
+                <a th:href="@{'/help'}" class="text-slate-600 hover:text-primary font-medium transition">Help</a>
+
+                <a href="#action" class="bg-primary hover:bg-primaryHover text-white px-5 py-2 rounded-lg font-medium transition shadow-sm ml-4">Login</a>
+            </div>
+
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-btn" class="text-slate-600 hover:text-primary focus:outline-none p-2">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 shadow-xl absolute w-full left-0">
+        <div class="px-4 pt-2 pb-6 space-y-1">
+            <a th:href="@{'/'}" class="block px-3 py-3 rounded-md text-base font-medium text-primary bg-blue-50 transition">Home</a>
+            <a th:href="@{'/view-result'}"  class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-primary hover:bg-blue-50 transition">View Result</a>
+            <a th:href="@{'/admin/add-result'}" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-primary hover:bg-blue-50 transition">Add Result</a>
+            <a th:href="@{'/help'}" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-primary hover:bg-blue-50 transition">Help</a>
+
+            <div class="pt-4 px-3">
+                <a href="#action" class="block w-full text-center bg-primary hover:bg-primaryHover text-white px-5 py-3 rounded-lg font-medium transition shadow-sm">Login</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<section class="relative bg-white pt-20 pb-28 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight mb-6">
+            Your Academic Results, <br class="hidden md:block"/>
+            <span class="text-primary">Delivered Instantly.</span>
+        </h1>
+        <p class="mt-4 max-w-2xl text-lg md:text-xl text-slate-500 mx-auto mb-10">
+            Access, analyze, and download your exam scores and performance reports in seconds. Result-Viewer makes tracking your academic journey easier than ever.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#action" class="bg-primary hover:bg-primaryHover text-white text-lg font-semibold px-8 py-3 rounded-lg shadow-md transition">
+                Check Results Now
+            </a>
+            <a href="#features" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 text-lg font-semibold px-8 py-3 rounded-lg shadow-sm transition">
+                Learn More
+            </a>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-slate-900">Why choose Result-Viewer?</h2>
+            <p class="mt-4 text-lg text-slate-500">Everything you need to manage and view academic data securely.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6 text-primary">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3">Lightning Fast</h3>
+                <p class="text-slate-500">No more crashing servers on result day. Our scalable infrastructure ensures you get your results instantly.</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6 text-primary">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3">Bank-Level Security</h3>
+                <p class="text-slate-500">Your privacy is our priority. End-to-end encryption ensures that your scores are only visible to you.</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition">
+                <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6 text-primary">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3">Detailed Analytics</h3>
+                <p class="text-slate-500">Don't just see your grades; understand them. Get beautiful charts breaking down your performance.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="testimonials" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl font-bold text-slate-900">Loved by Students & Institutions</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100">
+                <div class="flex text-yellow-400 mb-4">★★★★★</div>
+                <p class="text-slate-600 mb-6 italic">"I used to dread result days because the university website would always crash. Result-Viewer loaded my grades immediately. Total lifesaver!"</p>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-blue-200 rounded-full flex items-center justify-center text-primary font-bold">SJ</div>
+                    <div class="ml-3">
+                        <p class="text-sm font-bold text-slate-900">Sarah Jenkins</p>
+                        <p class="text-xs text-slate-500">Engineering Student</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100">
+                <div class="flex text-yellow-400 mb-4">★★★★★</div>
+                <p class="text-slate-600 mb-6 italic">"As a school administrator, publishing results used to take hours. With this platform, we upload a spreadsheet and students get notified instantly."</p>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-green-200 rounded-full flex items-center justify-center text-green-700 font-bold">MR</div>
+                    <div class="ml-3">
+                        <p class="text-sm font-bold text-slate-900">Marcus Reed</p>
+                        <p class="text-xs text-slate-500">High School Principal</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hidden lg:block">
+                <div class="flex text-yellow-400 mb-4">★★★★★</div>
+                <p class="text-slate-600 mb-6 italic">"The performance graphs are amazing. I can easily see which subjects I need to focus on for next semester. Highly recommended."</p>
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-purple-200 rounded-full flex items-center justify-center text-purple-700 font-bold">AL</div>
+                    <div class="ml-3">
+                        <p class="text-sm font-bold text-slate-900">Aisha Patel</p>
+                        <p class="text-xs text-slate-500">Medical Student</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="action" class="py-20 bg-primary">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to view your latest results?</h2>
+        <p class="text-blue-100 text-lg mb-10">Enter your Roll Number or Student ID below to instantly access your dashboard.</p>
+
+        <form class="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto" onsubmit="event.preventDefault();">
+            <input type="text" placeholder="Enter Roll Number / ID" class="w-full px-5 py-3 rounded-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-white" required>
+            <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-white font-semibold px-8 py-3 rounded-lg transition whitespace-nowrap shadow-lg">
+                Find Results
+            </button>
+        </form>
+    </div>
+</section>
+
+<footer class="bg-slate-900 py-8 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center text-center md:text-left">
+        <p class="text-slate-400 mb-4 md:mb-0">&copy; 2026 Result-Viewer. All rights reserved.</p>
+        <div class="space-x-4">
+            <a href="#" class="text-slate-400 hover:text-white transition">Privacy Policy</a>
+            <a href="#" class="text-slate-400 hover:text-white transition">Terms of Service</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
+
+</body>
+</html>
