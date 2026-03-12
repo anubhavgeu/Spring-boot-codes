@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "result_viewer_student")
 public class Student {
+
     @Id
     private String id;
     private String name;
@@ -30,9 +32,10 @@ public class Student {
     private String standard;
     private String fatherName;
     private String gender;
+    // table field according to project:
 
-    // student have multiple marks;
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Marks> marksList = new ArrayList<>();
-}
+    private List<Mark> marks = new ArrayList<>();
 
+
+}

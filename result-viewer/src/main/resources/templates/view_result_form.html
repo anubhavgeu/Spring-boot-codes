@@ -1,54 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>View Result</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result Form</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<nav class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center">
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<div class="max-w-md w-full bg-white shadow-lg rounded-lg p-8">
+    <h1 class="text-2xl font-bold text-gray-800 text-center">Get Your Result</h1>
+    <p class="text-gray-600 text-center mt-2">Enter your details below to view your result</p>
 
-            <div class="flex-shrink-0 flex items-center">
-                <a href="#" class="text-2xl font-bold text-primary">Result-Viewer</a>
-            </div>
-
-            <div class="hidden md:flex space-x-8 items-center">
-                <a th:href="@{'/'}" class="text-primary font-medium transition">Home</a>
-                <a th:href="@{'/view-result'}"  class="text-slate-600 hover:text-primary font-medium transition">View Result</a>
-                <a th:href="@{'/admin/add-result'}" class="text-slate-600 hover:text-primary font-medium transition">Add Result</a>
-                <a th:href="@{'/help'}" class="text-slate-600 hover:text-primary font-medium transition">Help</a>
-
-                <a href="#action" class="bg-primary hover:bg-primaryHover text-white px-5 py-2 rounded-lg font-medium transition shadow-sm ml-4">Login</a>
-            </div>
-
-            <div class="md:hidden flex items-center">
-                <button id="mobile-menu-btn" class="text-slate-600 hover:text-primary focus:outline-none p-2">
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
-            </div>
-
+    <form novalidate class="mt-6" th:action="@{'/view-result-action'}" th:object="${requestResultForm}" method="post">
+        <!-- Roll Number Field -->
+        <div class="mb-4">
+            <label for="rollNumber" class="block text-sm font-medium text-gray-700">Roll Number</label>
+            <input
+                    th:field="*{rollNumber}"
+                    type="text"
+                    id="rollNumber"
+                    name="rollNumber"
+                    placeholder="Enter your roll number"
+                    class="mt-1 block p-3 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            />
+            <span class="text-red-700 p-2" th:if="${#fields.hasErrors('rollNumber')}" th:errors="*{rollNumber}"></span>
         </div>
-    </div>
 
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 shadow-xl absolute w-full left-0">
-        <div class="px-4 pt-2 pb-6 space-y-1">
-            <a th:href="@{'/'}" class="block px-3 py-3 rounded-md text-base font-medium text-primary bg-blue-50 transition">Home</a>
-            <a th:href="@{'/view-result'}"  class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-primary hover:bg-blue-50 transition">View Result</a>
-            <a th:href="@{'/admin/add-result'}" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-primary hover:bg-blue-50 transition">Add Result</a>
-            <a th:href="@{'/help'}" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:text-primary hover:bg-blue-50 transition">Help</a>
+        <!-- Date of Birth Field -->
+        <div class="mb-4">
+            <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+            <input
+                    th:field="*{dateOfBirth}"
+                    type="date"
+                    id="dob"
+                    name="dob"
+                    class="mt-1 p-3 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            />
 
-            <div class="pt-4 px-3">
-                <a href="#action" class="block w-full text-center bg-primary hover:bg-primaryHover text-white px-5 py-3 rounded-lg font-medium transition shadow-sm">Login</a>
-            </div>
+            <span class="text-red-700 p-2" th:if="${#fields.hasErrors('dateOfBirth')}"
+                  th:errors="*{dateOfBirth}"></span>
         </div>
-    </div>
-</nav>
 
-  View result form
-
+        <!-- Submit Button -->
+        <div class="mt-6">
+            <button
+                    type="submit"
+                    class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+                View Result
+            </button>
+        </div>
+    </form>
+</div>
 </body>
 </html>

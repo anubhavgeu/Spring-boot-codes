@@ -7,20 +7,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "result_viewer_marks")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "result_viewer_marks")
-public class Marks {
+public class Mark {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String subjectName;
-    private Long marks;
-    private Long maxMarks;
-    private String feedBack;
+    private String marks;
+    private String maxMarks;
+    private String feedback;
     private String grade;
+
     @ManyToOne
-    private Student student;
+    private  Student student;
+
 }
