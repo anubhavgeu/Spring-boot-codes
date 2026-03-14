@@ -6,14 +6,14 @@ import com.result.view.entity.Student;
 import com.result.view.repository.StudentRepo;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,6 +22,7 @@ import java.util.UUID;
 @RequestMapping("/admin")
 public class AdminController {
 
+    private static final Logger log = LoggerFactory.getLogger(AdminController.class);
     private StudentRepo studentRepo;
     private ModelMapper modelMapper;
 
@@ -30,8 +31,14 @@ public class AdminController {
         this.modelMapper = modelMapper;
     }
 
+    @PostMapping("/result-page")
+    public String redirectHandler() {
+        return "redirect:/admin/add-result";
+    }
+
     @GetMapping("/add-result")
-    public String addResultForm(Model model) {
+    public String addResultForm(Principal principal, Model model) {
+        log.info(principal.getName());
         StudentForm studentForm = new StudentForm();
 
         List<String> standardOptions = new ArrayList<>();
@@ -45,6 +52,7 @@ public class AdminController {
 
         model.addAttribute("studentForm", studentForm);
         model.addAttribute("standardOptions", standardOptions);
+        model.addAttribute("name", principal.getName());
         return "admin/add_result";
     }
 

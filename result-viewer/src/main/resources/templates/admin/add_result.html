@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -22,6 +22,10 @@
                 <a th:href="@{'/view-result'}" class="text-gray-700 hover:text-blue-600 font-medium">View Result</a>
                 <a th:href="@{'/admin/add-result'}" class="text-gray-700 hover:text-blue-600 font-medium">Add Result</a>
                 <a th:href="@{'/help'}" class="text-gray-700 hover:text-blue-600 font-medium">Help</a>
+                <a th:text="${name}" class="text-gray-700 hover:text-blue-600 font-medium">Help</a>
+                <form th:action = "@{'/user-logout'}" method="post">
+                    <button class="text-black bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">logout</button>
+                </form>
             </div>
 
             <!-- Mobile Menu Button -->
@@ -42,6 +46,9 @@
             <a href="#view-result" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">View Result</a>
             <a href="#add-result" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Add Result</a>
             <a href="#help" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Help</a>
+            <form th:action = "@{'/user-logout'}" method="post">
+                <button class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">logout</button>
+            </form>
         </div>
     </div>
 </nav>

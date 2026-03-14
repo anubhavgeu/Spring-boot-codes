@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -20,6 +21,7 @@ public class SecurityConfig {
 //                    .requestMatchers("/admin/add-result-action").authenticated()
 //                    .anyRequest().permitAll()
 //        ).formLogin(Customizer.withDefaults());
+//        httpSecurity.csrf(e -> e.disable());
         httpSecurity.authorizeHttpRequests(httpRequest ->
                 httpRequest.requestMatchers("/admin/add-result").authenticated()
                         .requestMatchers("/admin/add-result-action").authenticated()
@@ -27,7 +29,7 @@ public class SecurityConfig {
         ).formLogin(formLogin ->
             formLogin.loginPage("/user-login")
                     .loginProcessingUrl("/do-login")
-                    .successForwardUrl("/admin/add-result")
+                    .successForwardUrl("/admin/result-page")
                     .failureForwardUrl("/user-login")
                     .permitAll(true)
         )
