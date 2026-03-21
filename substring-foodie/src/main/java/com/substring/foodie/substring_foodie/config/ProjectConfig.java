@@ -3,6 +3,10 @@ package com.substring.foodie.substring_foodie.config;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 public class ProjectConfig {
@@ -10,4 +14,11 @@ public class ProjectConfig {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        UserDetails user = User.builder().username("user").password("{noop}user").build();
+//        InMemoryUserDetailsManager inMemoryUserDetailsManager = new InMemoryUserDetailsManager(user);
+//        return inMemoryUserDetailsManager;
+//    }
 }

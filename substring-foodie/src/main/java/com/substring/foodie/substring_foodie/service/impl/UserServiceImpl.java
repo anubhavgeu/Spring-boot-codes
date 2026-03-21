@@ -1,11 +1,13 @@
 package com.substring.foodie.substring_foodie.service.impl;
 
+import com.substring.foodie.substring_foodie.config.AppConstants;
 import com.substring.foodie.substring_foodie.dto.UserDto;
 import com.substring.foodie.substring_foodie.entity.Restaurant;
 import com.substring.foodie.substring_foodie.entity.Role;
 import com.substring.foodie.substring_foodie.entity.RoleEntity;
 import com.substring.foodie.substring_foodie.entity.User;
 import com.substring.foodie.substring_foodie.exception.ResourceNotFoundException;
+import com.substring.foodie.substring_foodie.repository.RoleRepository;
 import com.substring.foodie.substring_foodie.repository.UserRepository;
 import com.substring.foodie.substring_foodie.service.UserService;
 import com.substring.foodie.substring_foodie.utils.Helper;
@@ -13,6 +15,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.util.BeanUtil;
 
@@ -20,10 +23,15 @@ import java.util.List;
 import java.util.Optional;import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
+    private PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     // constructor injection;
-    public UserServiceImpl (UserRepository userRepository) {
+
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserRepository userRepository, RoleRepository roleRepository) {
+        this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -31,6 +39,9 @@ public class UserServiceImpl implements UserService {
         // generate new id for user;
         userDto.setId(Helper.generateRandomId());
         User user = convertUserDtoToUser(userDto);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        RoleEntity roleGuest = roleRepository.findByName(AppConstants.getRoleUser());
+        user.getRoleEntities().add(roleGuest);
         User savedUser = userRepository.save(user);
         return convertUserToUserDto(savedUser);
     }
