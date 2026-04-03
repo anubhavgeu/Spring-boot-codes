@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,4 +32,24 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<RoleEntity> roleEntities = new ArrayList<>();
+
+    private LocalDate createdAt;
+
+
+    @PrePersist
+    public void preSave() {
+        System.out.println("Called just before saving in db");
+        this.setCreatedAt(LocalDate.now());
+    }
+
+    @PostPersist
+    public void postSave() {
+        System.out.println("Callback method just after saving");
+        System.out.println("Entity saved " + this.getId());
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        System.out.println("Entity updated: " + this.getId());
+    }
 }
