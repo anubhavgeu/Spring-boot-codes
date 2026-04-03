@@ -5,6 +5,8 @@ import com.substring.foodie.playload.example.UserDTO;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,4 +28,13 @@ public class AuthController {
         logger.info("User age: {}", userDTO.getAge());
         return "success";
     }
+
+    // exception handling method
+    // null pointer exception
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public String handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+//        String message = ex.getMessage();
+//        logger.error(message);
+//        return ex.getMessage();
+//    }
 }
