@@ -16,8 +16,8 @@ import java.time.LocalDate;
 import java.util.List;
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
-    private RestaurantRepo restaurantRepo;
-    private ModelMapper modelMapper;
+    private final RestaurantRepo restaurantRepo;
+    private final ModelMapper modelMapper;
     public RestaurantServiceImpl (RestaurantRepo restaurantRepo, ModelMapper modelMapper) {
         this.restaurantRepo = restaurantRepo;
         this.modelMapper = modelMapper;
@@ -73,7 +73,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Page<RestaurantDto> getOpenRestaurants(Pageable pageable) {
-        Page<Restaurant> pageRestaurant = restaurantRepo.findByOpen(true, pageable);
+        Page<Restaurant> pageRestaurant = restaurantRepo.findByIsOpen(true, pageable);
         return pageRestaurant.map(restaurant -> modelMapper.map(restaurant, RestaurantDto.class));
     }
 }
