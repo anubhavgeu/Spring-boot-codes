@@ -1,7 +1,11 @@
 package com.substring.foodie.controller;
 
+import com.substring.foodie.dto.FileData;
 import com.substring.foodie.dto.RestaurantDto;
+import com.substring.foodie.service.FileService;
 import com.substring.foodie.service.RestaurantService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,14 +13,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/restaurants")
 public class RestaurantController {
-    private RestaurantService restaurantService;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final RestaurantService restaurantService;
     public RestaurantController(RestaurantService restaurantService) {
+
         this.restaurantService = restaurantService;
     }
 
@@ -63,6 +71,19 @@ public class RestaurantController {
     @GetMapping("/getRestaurantById/{restaurantId}")
     public ResponseEntity<RestaurantDto> getRestaurantById(@PathVariable String restaurantId) {
         return ResponseEntity.ok(restaurantService.getRestaurantById(restaurantId));
+    }
+
+    @PostMapping("/upload-banner/{restaurantId}")
+    public ResponseEntity<?> uploadFile(
+            @RequestParam("banner") MultipartFile banner,
+            @PathVariable String restaurantId
+    ) throws IOException {
+        logger.info("Uploading banner file: {}", banner.getOriginalFilename());
+        logger.info("Get content type: {}", banner.getContentType());
+        // call file service
+        RestaurantDto restaurantDto = restaurantService.uploadBanner(banner, restaurantId);
+
+        return new ResponseEntity<>(restaurantDto, HttpStatus.OK);
     }
 
 }

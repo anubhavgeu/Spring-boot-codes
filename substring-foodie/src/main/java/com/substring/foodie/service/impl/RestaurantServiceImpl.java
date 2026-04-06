@@ -1,24 +1,34 @@
 package com.substring.foodie.service.impl;
 
+import com.substring.foodie.dto.FileData;
 import com.substring.foodie.dto.RestaurantDto;
 import com.substring.foodie.entity.Restaurant;
 import com.substring.foodie.exception.ResourceNotFoundException;
 import com.substring.foodie.repository.RestaurantRepo;
+import com.substring.foodie.service.FileService;
 import com.substring.foodie.service.RestaurantService;
 import com.substring.foodie.utils.Helper;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
+    @Value("${restaurant.file.path}")
+    private String bannerFolderPath;
+    private final FileService fileService;
     private final RestaurantRepo restaurantRepo;
     private final ModelMapper modelMapper;
-    public RestaurantServiceImpl (RestaurantRepo restaurantRepo, ModelMapper modelMapper) {
+    public RestaurantServiceImpl (FileService fileService, RestaurantRepo restaurantRepo, ModelMapper modelMapper) {
+        this.fileService = fileService;
         this.restaurantRepo = restaurantRepo;
         this.modelMapper = modelMapper;
     }
@@ -75,5 +85,18 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Page<RestaurantDto> getOpenRestaurants(Pageable pageable) {
         Page<Restaurant> pageRestaurant = restaurantRepo.findByIsOpen(true, pageable);
         return pageRestaurant.map(restaurant -> modelMapper.map(restaurant, RestaurantDto.class));
+    }
+
+    @Override
+    public RestaurantDto uploadBanner(MultipartFile file, String id) throws IOException {
+        String fileName = file.getOriginalFilename();
+        String fileExtenstion = fileName.substring(fileName.lastIndexOf("."));
+        String newFileName = new Date().getTime() + fileExtenstion;
+        FileData fileData = fileService.uploadFile(file, bannerFolderPath+newFileName);
+
+        Restaurant restaurant = restaurantRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Restaurant not found!"));
+        restaurant.setBanner(fileData.fileName());
+        restaurantRepo.save(restaurant);
+        return modelMapper.map(restaurant, RestaurantDto.class);
     }
 }
