@@ -5,6 +5,7 @@ import com.substring.foodie.exception.InvalidFilePathException;
 import com.substring.foodie.service.FileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,5 +36,15 @@ public class FileServiceImpl implements FileService {
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
         return new FileData(fileName, path);
+    }
+
+    @Override
+    public void deleteFile(String path) {
+
+    }
+
+    @Override
+    public Resource loadFile(String path) {
+        return null;
     }
 }

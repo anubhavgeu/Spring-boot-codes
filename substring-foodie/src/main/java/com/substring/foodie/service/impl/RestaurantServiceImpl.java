@@ -89,6 +89,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public RestaurantDto uploadBanner(MultipartFile file, String id) throws IOException {
+        // remove the old file
         String fileName = file.getOriginalFilename();
         String fileExtenstion = fileName.substring(fileName.lastIndexOf("."));
         String newFileName = new Date().getTime() + fileExtenstion;
