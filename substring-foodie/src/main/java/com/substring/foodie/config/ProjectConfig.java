@@ -14,10 +14,10 @@ public class ProjectConfig {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user1 = User.builder().username("user").password("{noop}user").build();
-
-        return new InMemoryUserDetailsManager(user1);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        UserDetails user1 = User.builder().username("user").password("{noop}user").build();
+//
+//        return new InMemoryUserDetailsManager(user1);
+//    }
 }

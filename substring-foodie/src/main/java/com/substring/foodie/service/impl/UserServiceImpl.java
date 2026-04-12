@@ -1,22 +1,32 @@
 package com.substring.foodie.service.impl;
 
+import com.substring.foodie.config.AppConstants;
 import com.substring.foodie.dto.UserDto;
+import com.substring.foodie.entity.RoleEntity;
 import com.substring.foodie.entity.User;
 import com.substring.foodie.exception.ResourceNotFoundException;
+import com.substring.foodie.repository.RoleRepo;
 import com.substring.foodie.repository.UserRepo;
 import com.substring.foodie.service.UserService;
 import com.substring.foodie.utils.Helper;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
-
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserRepo userRepo;
-    public UserServiceImpl(UserRepo userRepo) {
+    private final RoleRepo roleRepo;
+    private final ModelMapper modelMapper;
+    public UserServiceImpl(UserRepo userRepo,  BCryptPasswordEncoder bCryptPasswordEncoder, RoleRepo roleRepo, ModelMapper modelMapper) {
         this.userRepo = userRepo;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.roleRepo = roleRepo;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -25,6 +35,9 @@ public class UserServiceImpl implements UserService {
         userDto.setId(Helper.generateRandomId());
         // cast dto to entity;
         User user = convertDtoToUserEntity(userDto);
+        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        RoleEntity roleGuest = roleRepo.findByName(AppConstants.getGuestRole());
+        user.getRoleEntities().add(roleGuest);
         User savedUser = userRepo.save(user);
         return convertUserEntityToDto(savedUser);
     }
@@ -75,26 +88,26 @@ public class UserServiceImpl implements UserService {
 
 
     private User convertDtoToUserEntity(UserDto userDto) {
-        User user = new User();
+//        User user = new User();
 //        BeanUtils.copyProperties(userDto, user);
-        user.setId(userDto.getId());
-        user.setName(userDto.getName());
-        user.setPassword(userDto.getPassword());
-        user.setEmail(userDto.getEmail());
-        user.setAddress(userDto.getAddress());
-        user.setPhoneNumber(userDto.getPhoneNumber());
-        return user;
+//        user.setId(userDto.getId());
+//        user.setName(userDto.getName());
+//        user.setPassword(userDto.getPassword());
+//        user.setEmail(userDto.getEmail());
+//        user.setAddress(userDto.getAddress());
+//        user.setPhoneNumber(userDto.getPhoneNumber());
+        return modelMapper.map(userDto, User.class);
     }
 
     private UserDto convertUserEntityToDto(User user) {
-        UserDto userDto = new UserDto();
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-        userDto.setPassword(user.getPassword());
-        userDto.setEmail(user.getEmail());
-        userDto.setAddress(user.getAddress());
-        userDto.setPhoneNumber(user.getPhoneNumber());
-        return userDto;
+//        UserDto userDto = new UserDto();
+//        userDto.setId(user.getId());
+//        userDto.setName(user.getName());
+//        userDto.setPassword(user.getPassword());
+//        userDto.setEmail(user.getEmail());
+//        userDto.setAddress(user.getAddress());
+//        userDto.setPhoneNumber(user.getPhoneNumber());
+        return modelMapper.map(user, UserDto.class);
     }
 
 

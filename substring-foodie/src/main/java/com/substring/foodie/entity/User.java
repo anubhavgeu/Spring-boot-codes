@@ -34,7 +34,7 @@ public class User {
     private boolean isAvailable = true; //applicable for delivery boy only;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Restaurant> restaurants = new ArrayList<>();
-    @ManyToMany (cascade = CascadeType.ALL)
+    @ManyToMany (cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
@@ -43,6 +43,7 @@ public class User {
 
     private LocalDate createdAt;
 
+    private boolean enabled = true;
 
     @PrePersist
     public void preSave() {
