@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 @Builder
 public class JwtResponse {
-    private String token;
+    private String accessToken;
+    private String refreshToken;
     private UserDto userDto;
 }

@@ -1,13 +1,12 @@
 package com.substring.foodie.security;
 
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 // perform operation on jwt
 // create jwt
@@ -15,15 +14,22 @@ import java.util.Date;
 // validate token
 @Service
 public class JwtService {
-    public static final long EXPIRATION_TIME = (15*60*1000);
+    public static final long EXPIRATION_TIME = (15*60*1000); // for access token
+    private static final long EXPIRATION_REFRESH_TIME = 24*60*60*1000; // for refresh token
     private static final String SECRET = "This is the secret key of enough size";
+    private static final String TOKEN_TYPE = "Bearer ";
+    private static final String REFRESH_TOKEN_TYPE = "refresh_token";
+    private static final String ACCESS_TOKEN_TYPE = "access_token";
 
-    public String generateToken(String username) {
+    public String generateToken(String username, boolean isAccessToken) {
+        long expTime = isAccessToken ? EXPIRATION_TIME : EXPIRATION_REFRESH_TIME;
+        String tokenType = isAccessToken ? ACCESS_TOKEN_TYPE : REFRESH_TOKEN_TYPE;
         return Jwts
                 .builder()
                 .subject(username)
+                .claim("typ", tokenType)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .expiration(new Date(System.currentTimeMillis() + expTime))
                 .signWith(Keys.hmacShaKeyFor(SECRET.getBytes()), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -64,5 +70,27 @@ public class JwtService {
                 .getBody()
                 .getExpiration();
         return expiration.before(new Date());
+    }
+
+    public boolean isRefreshToken(String token) {
+        Claims claims = Jwts
+                .parser()
+                .setSigningKey(SECRET.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        String tokenType = (String)claims.get("typ");
+        return tokenType.equals(REFRESH_TOKEN_TYPE);
+    }
+
+    public boolean isAccessToken(String token) {
+        Claims claims = Jwts
+                .parser()
+                .setSigningKey(SECRET.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        String tokenType = (String)claims.get("typ");
+        return tokenType.equals(ACCESS_TOKEN_TYPE);
     }
 }
