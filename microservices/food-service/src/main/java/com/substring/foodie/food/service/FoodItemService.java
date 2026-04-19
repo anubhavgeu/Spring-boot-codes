@@ -7,6 +7,7 @@ import com.substring.foodie.food.entities.FoodCategory;
 import com.substring.foodie.food.entities.FoodItem;
 import com.substring.foodie.food.repository.FoodCategoryRepo;
 import com.substring.foodie.food.repository.FoodItemRepo;
+import com.substring.foodie.food.service.external.RestaurantService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,13 +18,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class FoodItemService {
+    private final RestaurantService restaurantService;
     private final FoodItemRepo foodItemRepo;
     private final FoodCategoryRepo foodCategoryRepo;
     private final RestTemplate restTemplate;
-    public FoodItemService(FoodItemRepo foodItemRepo, FoodCategoryRepo foodCategoryRepo, RestTemplate restTemplate) {
+    public FoodItemService(FoodItemRepo foodItemRepo, FoodCategoryRepo foodCategoryRepo, RestTemplate restTemplate, RestaurantService restaurantService) {
         this.foodItemRepo = foodItemRepo;
         this.foodCategoryRepo = foodCategoryRepo;
         this.restTemplate = restTemplate;
+        this.restaurantService = restaurantService;
     }
 
     public List<FoodItemDto> getAllFoodItems() {
@@ -39,8 +42,13 @@ public class FoodItemService {
         FoodItem foodItem = foodItemRepo.findById(foodItemId).orElseThrow(()->new RuntimeException("FoodItem not found"));
         // food item ke andar category + restaurant h;
         // call restaurant service to get the data
-        String restaurantServiceUrl = "http://localhost:9091/api/v1/restaurants/" + foodItem.getRestaurantId();
-        RestaurantDto restaurantDto = restTemplate.getForObject(restaurantServiceUrl, RestaurantDto.class);
+//        String restaurantServiceUrl = "http://localhost:9091/api/v1/restaurants/" + foodItem.getRestaurantId();
+//        RestaurantDto restaurantDto = restTemplate.getForObject(restaurantServiceUrl, RestaurantDto.class);
+//        FoodItemDto foodItemDto = convertToDto(foodItem);
+//        foodItemDto.setRestaurantDto(restaurantDto);
+
+        // with feign client;
+        RestaurantDto restaurantDto = restaurantService.findById(foodItem.getRestaurantId());
         FoodItemDto foodItemDto = convertToDto(foodItem);
         foodItemDto.setRestaurantDto(restaurantDto);
         return foodItemDto;
