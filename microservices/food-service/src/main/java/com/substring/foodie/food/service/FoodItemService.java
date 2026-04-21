@@ -7,9 +7,11 @@ import com.substring.foodie.food.entities.FoodCategory;
 import com.substring.foodie.food.entities.FoodItem;
 import com.substring.foodie.food.repository.FoodCategoryRepo;
 import com.substring.foodie.food.repository.FoodItemRepo;
+import com.substring.foodie.food.service.external.RestWebClientService;
 import com.substring.foodie.food.service.external.RestaurantService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +23,14 @@ public class FoodItemService {
     private final RestaurantService restaurantService;
     private final FoodItemRepo foodItemRepo;
     private final FoodCategoryRepo foodCategoryRepo;
-    private final RestTemplate restTemplate;
-    public FoodItemService(FoodItemRepo foodItemRepo, FoodCategoryRepo foodCategoryRepo, RestTemplate restTemplate, RestaurantService restaurantService) {
+//    private final RestTemplate restTemplate;
+//    private final WebClient webClient;
+    private final RestWebClientService restWebClientService;
+    public FoodItemService(FoodItemRepo foodItemRepo, FoodCategoryRepo foodCategoryRepo, RestaurantService restaurantService, RestWebClientService restWebClientService) {
         this.foodItemRepo = foodItemRepo;
         this.foodCategoryRepo = foodCategoryRepo;
-        this.restTemplate = restTemplate;
         this.restaurantService = restaurantService;
+        this.restWebClientService = restWebClientService;
     }
 
     public List<FoodItemDto> getAllFoodItems() {
@@ -48,7 +52,11 @@ public class FoodItemService {
 //        foodItemDto.setRestaurantDto(restaurantDto);
 
         // with feign client;
-        RestaurantDto restaurantDto = restaurantService.findById(foodItem.getRestaurantId());
+//        RestaurantDto restaurantDto = restaurantService.findById(foodItem.getRestaurantId());
+
+        // web client for blocking
+        RestaurantDto restaurantDto = restWebClientService.getById(foodItem.getRestaurantId());
+
         FoodItemDto foodItemDto = convertToDto(foodItem);
         foodItemDto.setRestaurantDto(restaurantDto);
         return foodItemDto;
