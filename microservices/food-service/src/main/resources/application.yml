@@ -1,3 +1,5 @@
+server:
+  port: 9092
 spring:
   application:
     name: "food-service"
@@ -13,5 +15,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-server:
-  port: 9092
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
