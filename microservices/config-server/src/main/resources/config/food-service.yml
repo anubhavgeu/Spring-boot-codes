@@ -1,6 +1,5 @@
+
 spring:
-  profiles:
-    active: prod
   application:
     name: "food-service"
   datasource:
@@ -16,8 +15,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
-  config:
-    import: "configserver:http://localhost:9096/"
 eureka:
   client:
     service-url:

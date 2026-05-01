@@ -1,0 +1,9 @@
+server:
+  port: 9092
+
+
+info:
+  app:
+    name: "Food service development profile"
+    description: "This is api gateway for common entry point"
+    version: "1.0 under Development"
