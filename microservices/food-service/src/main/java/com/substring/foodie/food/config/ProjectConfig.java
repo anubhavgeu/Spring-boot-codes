@@ -24,11 +24,16 @@ public class ProjectConfig {
     }
 
     @Bean
-    @LoadBalanced
-    public WebClient webClient() {
-        return WebClient
-                .builder()
-                .baseUrl(AppConstants.RESTAURANT_SERVICE_URL)
+    @LoadBalanced // This is the magic part for the builder
+    public WebClient.Builder loadBalancedWebClientBuilder() {
+        return WebClient.builder();
+    }
+
+    @Bean
+    public WebClient webClient(WebClient.Builder builder) {
+        // Use the builder injected above which now has the LoadBalancer filter
+        return builder
+                .baseUrl(AppConstants.RESTAURANT_SERVICE_URL) // "lb://RESTAURANT-SERVICE"[cite: 8]
                 .build();
     }
 }

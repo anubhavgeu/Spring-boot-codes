@@ -52,10 +52,10 @@ public class FoodItemService {
 //        foodItemDto.setRestaurantDto(restaurantDto);
 
         // with feign client;
-//        RestaurantDto restaurantDto = restaurantService.findById(foodItem.getRestaurantId());
+        RestaurantDto restaurantDto = restaurantService.findById(foodItem.getRestaurantId());
 
         // web client for blocking
-        RestaurantDto restaurantDto = restWebClientService.getById(foodItem.getRestaurantId());
+//        RestaurantDto restaurantDto = restWebClientService.getById(foodItem.getRestaurantId());
 
         FoodItemDto foodItemDto = convertToDto(foodItem);
         foodItemDto.setRestaurantDto(restaurantDto);

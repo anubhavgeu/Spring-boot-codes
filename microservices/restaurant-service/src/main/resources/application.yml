@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: restaurant-service
+  config:
+    import: "configserver:http://localhost:9096/"
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true

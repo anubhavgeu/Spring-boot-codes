@@ -7,14 +7,27 @@ spring:
 
   profiles:
     active: native
+#    active: git
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: https://github.com/anubhavgeu/Spring-boot-codes/tree/main/microservices/substring-foodie-config
+#          default-label: origin
+#
+#          timeout: 5
+#          clone-on-start: true
+#          force-pull: true
 
+#
   cloud:
     config:
       server:
         native:
           search-locations: classpath:/config
 
-
+encrypt:
+  key: "This is the encryption key for the config server"
 eureka:
   client:
     service-url:
