@@ -1,10 +1,14 @@
 package com.gateway;
 
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
+import org.springframework.cloud.gateway.filter.ratelimit.RateLimiter;
+import org.springframework.cloud.gateway.filter.ratelimit.RedisRateLimiter;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 
@@ -23,6 +27,11 @@ public class GatewayConfig {
                                                         circuitBreakerConfig.setName("circuitBreakerFood")
                                                                 .setFallbackUri("forward:/circuitBreaker/fallback")
                                                 )
+                                                .requestRateLimiter(rateConfig->
+                                                        rateConfig.setRateLimiter(rateLimiter())
+                                                                .setKeyResolver(keyResolver())
+                                                )
+
                                 )
                                 .uri("lb://food-service")
 
@@ -45,5 +54,21 @@ public class GatewayConfig {
                         .uri("lb://restaurant-service")
 
                 ).build();
+    }
+
+
+    @Bean(name = "keyResolver")
+    public KeyResolver keyResolver() {
+        return exchange -> Mono.just(
+                exchange.getRequest()
+                        .getRemoteAddress()
+                        .getAddress()
+                        .getHostAddress()
+        );
+    }
+    @Bean
+    public RateLimiter rateLimiter() {
+        return new RedisRateLimiter(1,60,60
+        );
     }
 }
